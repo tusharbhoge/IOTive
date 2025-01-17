@@ -30,19 +30,19 @@ const Login = () => {
 
   return (
     <div className="w-screen h-screen flex flex-col justify-start items-center pt-[200px] gap-[100px] ">
-      <h1 className="text-4xl font-bold text-emerald-600  ">Welcome to <span className="text-4xl text-white ">IOTIVE !!!</span></h1>
+      <h1 className="text-4xl font-bold text-emerald-600  ">Welcome to <span className="text-4xl text-black ">IOTIVE !!!</span></h1>
       <form
         onSubmit={loginHandler}
-        className="w-[400px] h-[300px] border-[1px] border-emerald-900 rounded-xl p-10 flex flex-col gap-3 justify-center items-center shadow-xl shadow-emerald-600"
+        className="w-[400px] h-[300px] border-[1px] border-gray-950 rounded-xl p-10 flex flex-col gap-3 justify-center items-center shadow-xl shadow-gray-950"
       >
-        <h1 className="text-2xl font-semibold pb-5">Login</h1>
+        <h1 className="text-2xl font-semibold pb-5 text-gray-950">Login</h1>
         <input
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
           type="email"
           placeholder="Enter Your Email..."
-          className="w-full p-3 px-4 bg-transparent border-2 border-emerald-600 rounded-xl outline-none"
+          className="w-full p-3 px-4 bg-transparent border-2 border-gray-950 rounded-xl outline-none"
         />
         <input
           value={password}
@@ -50,11 +50,11 @@ const Login = () => {
           required
           type="password"
           placeholder="Enter Password..."
-          className="w-full p-3 px-4 bg-transparent border-2 border-emerald-600 rounded-xl outline-none"
+          className="w-full p-3 px-4 bg-transparent border-2 border-gray-950 rounded-xl outline-none"
         />
         <button
           type="submit"
-          className="w-full p-3 px-4 rounded-xl bg-emerald-600"
+          className="w-full p-3 px-4 rounded-xl bg-gray-950"
         >
           Login
         </button>
