@@ -12,14 +12,15 @@ import Login from "./components/Auth/Login";
 import UserDashboard from "./components/Dashboard/UserDashboard";
 import AdminDashboard from "./components/Dashboard/AdminDashboard";
 import RequireAuth from "./components/Auth/RequireAuth";
+import ControlPanel from "./components/UserComponets/ControlPanel";
+import ActiveAppliances from "./components/UserComponets/ActiveAppliances";
+import Schedules from "./components/UserComponets/Schedules";
+import Notifications from "./components/UserComponets/Notifications";
+import Analytics from "./components/UserComponets/Analytics";
+import Profile from "./components/UserComponets/Profile";
+import Report from "./components/UserComponets/Report";
 
-// Import newly created pages
-import ControlPanel from "./components/Pages/ControlPanel";
-import ActiveAppliances from "./components/Pages/ActiveAppliances";
-import Schedules from "./components/Pages/Schedules";
-import Notifications from "./components/Pages/Notifications";
-import Report from "./components/Pages/Report";
-import Analytics from "./components/Pages/Analytics";
+
 
 const App = () => {
   return (
@@ -95,6 +96,14 @@ const App = () => {
             element={
               <RequireAuth role="user">
                 <Analytics />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <RequireAuth role="user">
+                <Profile />
               </RequireAuth>
             }
           />
