@@ -8,7 +8,8 @@ const firebaseConfig = {
     storageBucket: "ioitive.firebasestorage.app",
     messagingSenderId: "110203531010",
     appId: "1:110203531010:web:73ec3975225212009d5c1b",
-    measurementId: "G-QSTKHMSF4R"
+    measurementId: "G-QSTKHMSF4R",
+    
   };
 
 // Initialize Firebase App

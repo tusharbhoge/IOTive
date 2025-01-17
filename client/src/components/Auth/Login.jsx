@@ -3,6 +3,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../db/firebase";
 import { useNavigate } from "react-router-dom";
 
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,20 +30,21 @@ const Login = () => {
   };
 
   return (
-    <div className="w-screen h-screen flex flex-col justify-start items-center pt-[200px] gap-[100px] ">
-      <h1 className="text-4xl font-bold text-emerald-600  ">Welcome to <span className="text-4xl text-black ">IOTIVE !!!</span></h1>
+    <div className="w-screen h-screen flex flex-col justify-start items-center pt-[200px] gap-[60px] ">
+      
+      <h1 className="text-4xl font-bold   ">Welcome to <span className="text-4xl text-emerald-600 ">IOTIVE !!!</span></h1>
       <form
         onSubmit={loginHandler}
-        className="w-[400px] h-[300px] border-[1px] border-gray-950 rounded-xl p-10 flex flex-col gap-3 justify-center items-center shadow-xl shadow-gray-950"
+        className="w-[400px] h-[300px] border-[1px] border-neutral-100  rounded-xl p-10 flex flex-col gap-3 justify-center items-center shadow-xl shadow-neutral-400"
       >
-        <h1 className="text-2xl font-semibold pb-5 text-gray-950">Login</h1>
+        <h1 className="text-2xl font-semibold pb-5 text-emerald-600">Login</h1>
         <input
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
           type="email"
           placeholder="Enter Your Email..."
-          className="w-full p-3 px-4 bg-transparent border-2 border-gray-950 rounded-xl outline-none"
+          className="w-full p-3 px-4 bg-transparent border-2 border-neutral-400 rounded-xl outline-none"
         />
         <input
           value={password}
@@ -50,11 +52,11 @@ const Login = () => {
           required
           type="password"
           placeholder="Enter Password..."
-          className="w-full p-3 px-4 bg-transparent border-2 border-gray-950 rounded-xl outline-none"
+          className="w-full p-3 px-4 bg-transparent border-2 border-neutral-400 rounded-xl outline-none"
         />
         <button
           type="submit"
-          className="w-full p-3 px-4 rounded-xl bg-gray-950"
+          className="w-full p-3 px-4 rounded-xl text-white bg-emerald-600"
         >
           Login
         </button>

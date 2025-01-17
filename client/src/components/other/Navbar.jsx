@@ -40,11 +40,11 @@ const Navbar = () => {
         >
           {isOpen ? (
             <MenuOpenIcon
-              style={{ fontSize: "40px", color: "white", cursor: "pointer" }}
+              style={{ fontSize: "40px", fill: "white", cursor: "pointer" }}
             />
           ) : (
             <MenuIcon
-              style={{ fontSize: "40px", color: "white", cursor: "pointer" }}
+              style={{ fontSize: "40px", fill: "white", cursor: "pointer" }}
             />
           )}
         </div>
