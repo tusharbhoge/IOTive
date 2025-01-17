@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { AuthProvider } from "./components/context/AuthProvider";
 import Navbar from "./components/other/Navbar";
 import CreateUser from "./components/Auth/CreateUser";
@@ -12,8 +12,7 @@ const App = () => {
   return (
     <AuthProvider>
       <Router>
-        {/* Navbar is placed outside Routes to show it on all pages */}
-        <Navbar />
+        <ConditionalNavbar />
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Login />} />
@@ -40,6 +39,13 @@ const App = () => {
       </Router>
     </AuthProvider>
   );
+};
+
+// Conditional Navbar Component
+const ConditionalNavbar = () => {
+  const location = useLocation();
+  const excludeNavbarRoutes = ["/"]; // Add any other routes you want to exclude here
+  return !excludeNavbarRoutes.includes(location.pathname) ? <Navbar /> : null;
 };
 
 export default App;

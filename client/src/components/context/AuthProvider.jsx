@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       await signOut(auth);
-      alert("Logged out successfully!");
+      
     } catch (error) {
       console.error("Logout error:", error);
     }

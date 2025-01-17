@@ -29,12 +29,13 @@ const Login = () => {
   };
 
   return (
-    <div className="w-screen h-[80vh] flex justify-center items-center">
+    <div className="w-screen h-screen flex flex-col justify-start items-center pt-[200px] gap-[100px] ">
+      <h1 className="text-4xl font-bold text-emerald-600  ">Welcome to <span className="text-4xl text-white ">IOTIVE !!!</span></h1>
       <form
         onSubmit={loginHandler}
-        className="w-[400px] h-[300px] rounded-xl p-10 flex flex-col gap-3 justify-center items-center shadow-xl shadow-emerald-600"
+        className="w-[400px] h-[300px] border-[1px] border-emerald-900 rounded-xl p-10 flex flex-col gap-3 justify-center items-center shadow-xl shadow-emerald-600"
       >
-        <h1 className="text-2xl font-semibold">Login</h1>
+        <h1 className="text-2xl font-semibold pb-5">Login</h1>
         <input
           value={email}
           onChange={(e) => setEmail(e.target.value)}
