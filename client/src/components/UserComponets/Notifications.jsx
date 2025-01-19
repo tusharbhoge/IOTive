@@ -20,7 +20,7 @@ function Notifications() {
   return (
     <div className="flex flex-col h-screen bg-white">
       {/* Top Bar */}
-      <div className="text-white text-center py-3 mt-5">
+      <div className="text-white text-center py-2 mt-5">
         <h1 className="text-xl font-semibold">Notifications</h1>
       </div>
 
