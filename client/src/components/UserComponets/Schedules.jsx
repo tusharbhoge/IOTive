@@ -12,7 +12,6 @@ const Schedules = () => {
     return `${day}/${month}/${year}`;
   };
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (device && date && startTime && endTime) {
@@ -126,9 +125,8 @@ const Schedules = () => {
           </button>
         </form>
 
-
         {/* Form */}
-      
+
         {/* Scheduled Appliances */}
         <div className="w-full bg-white rounded-lg shadow-md p-4 mt-4">
           <h3 className="text-green-600 font-semibold mb-2">
@@ -145,7 +143,8 @@ const Schedules = () => {
                 >
                   <div>
                     <span className="font-semibold">{schedule.device}</span> -{" "}
-                    {formatDate(schedule.date)} from {schedule.startTime} to {schedule.endTime}
+                    {formatDate(schedule.date)} from {schedule.startTime} to{" "}
+                    {schedule.endTime}
                   </div>
                   <button
                     onClick={() => handleDelete(schedule.id)}
@@ -158,7 +157,6 @@ const Schedules = () => {
             )}
           </ul>
         </div>
-
       </div>
     </div>
   );
