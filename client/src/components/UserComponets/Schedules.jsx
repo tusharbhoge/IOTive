@@ -32,23 +32,23 @@ const Schedules = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-100">
+    <div className="text-lg flex flex-col h-screen bg-white">
       {/* Top Bar */}
       <div className=" text-white text-center mt-3 py-2">
-        <h1 className="text-lg font-semibold">Schedules</h1>
+        <h1 className="text-xl font-semibold">Schedules</h1>
       </div>
 
       <div className="flex flex-col items-center p-4">
         {/* Input Form */}
         <form
           onSubmit={handleSubmit}
-          className="bg-white w-full rounded-lg shadow-md p-4 flex flex-col gap-4"
+          className="bg-white w-full rounded-lg shadow-lg border-[1px] p-4 flex flex-col gap-4"
         >
           {/* Select Device */}
           <div>
             <label
               htmlFor="device"
-              className="block text-gray-600 font-semibold mb-1"
+              className="block text-gray-600 text-lg font-semibold mb-1"
             >
               Select Device
             </label>
