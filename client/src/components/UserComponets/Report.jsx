@@ -47,11 +47,11 @@ const Report = () => {
   };
 
   return (
-    <div className="flex flex-col items-center py-6 h-screen bg-white">
-      <div className=" text-white text-center mt-3 py-2 mb-5">
+    <div className="flex flex-col items-center py-6 h-screen bg-white ">
+      <div className=" text-white text-lg text-center mt-3 py-2 mb-5">
         <h1 className="text-xl font-semibold">Report</h1>
       </div>
-      <div className="w-[90%] p-6 shadow-lg border-[1px] border-neutral-200 shadow-neutral-300 rounded-lg">
+      <div className="w-[90%] p-6 text-lg shadow-lg border-[1px] border-neutral-200 shadow-neutral-300 rounded-lg">
         {/* Toggle Buttons */}
         <div className="flex justify-around mb-6">
           {["weekly", "monthly", "yearly"].map((option) => (

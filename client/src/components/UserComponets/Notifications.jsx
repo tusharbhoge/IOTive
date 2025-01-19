@@ -21,7 +21,7 @@ function Notifications() {
     <div className="flex flex-col h-screen bg-white">
       {/* Top Bar */}
       <div className="text-white text-center py-3 mt-5">
-        <h1 className="text-lg font-semibold">Notifications</h1>
+        <h1 className="text-xl font-semibold">Notifications</h1>
       </div>
 
       {/* Notification List */}
