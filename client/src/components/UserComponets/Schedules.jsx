@@ -7,6 +7,7 @@ const Schedules = () => {
   const [endTime, setEndTime] = useState("");
   const [schedules, setSchedules] = useState([]);
 
+
   const formatDate = (isoDate) => {
     const [year, month, day] = isoDate.split("-");
     return `${day}/${month}/${year}`;

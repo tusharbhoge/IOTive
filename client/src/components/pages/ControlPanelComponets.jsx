@@ -2,31 +2,28 @@ import React, { useState, useEffect } from "react";
 import AirIcon from "@mui/icons-material/Air";
 import ToggleOnIcon from "@mui/icons-material/ToggleOn";
 import ToggleOffOutlinedIcon from "@mui/icons-material/ToggleOffOutlined";
-import { getDatabase, ref, onValue, set } from "firebase/database"; // Firebase Realtime Database functions
-import { app } from "../db/firebase"; // Import your Firebase app config
+import { getDatabase, ref, onValue, set } from "firebase/database";
+import { app } from "../db/firebase";
 
 // Initialize the Firebase Database
 const database = getDatabase(app);
 
-const ControlPanelComponets = () => {
-  // State to manage the toggle status
+const ControlPanelComponents = () => {
   const [isOn, setIsOn] = useState(false);
 
-  // Fetch current LED state from Firebase on mount
   useEffect(() => {
-    const ledRef = ref(database, "appliances/red_led"); // Reference to the 'red_led' node in the database
+    const ledRef = ref(database, "appliances/red_led1");
     onValue(ledRef, (snapshot) => {
       const ledState = snapshot.val();
-      setIsOn(ledState === "ON"); // Set local state based on database value
+      setIsOn(ledState === true); 
     });
   }, []);
 
-  // Handle toggle switch click
   const handleToggle = () => {
-    const newState = isOn ? "OFF" : "ON"; // Toggle state
-    set(ref(database, "appliances/red_led"), newState) // Update Firebase with new state
+    const newState = !isOn; // Toggle state
+    set(ref(database, "appliances/red_led1"), newState) // Update Firebase with boolean value
       .then(() => {
-        setIsOn(!isOn); // Update local state
+        setIsOn(newState); // Update local state
       })
       .catch((error) => {
         console.error("Error updating LED state:", error);
@@ -67,4 +64,4 @@ const ControlPanelComponets = () => {
   );
 };
 
-export default ControlPanelComponets;
+export default ControlPanelComponents;

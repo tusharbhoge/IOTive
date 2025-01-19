@@ -1,12 +1,8 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useLocation,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { AuthProvider } from "./components/context/AuthProvider";
 import Navbar from "./components/other/Navbar";
+import AdminNavbar from "./components/other/AdminNavbar";
 import CreateUser from "./components/Auth/CreateUser";
 import Login from "./components/Auth/Login";
 import UserDashboard from "./components/Dashboard/UserDashboard";
@@ -19,8 +15,9 @@ import Notifications from "./components/UserComponets/Notifications";
 import Analytics from "./components/UserComponets/Analytics";
 import Profile from "./components/UserComponets/Profile";
 import Report from "./components/UserComponets/Report";
-
-
+import CreateClient from "./components/adminComponents/CreateClient";
+import ViewClient from "./components/adminComponents/ViewClient";
+import AdminProfile from "./components/adminComponents/AdminProfile";
 
 const App = () => {
   return (
@@ -107,6 +104,33 @@ const App = () => {
               </RequireAuth>
             }
           />
+          {/* admin Feature Routes */}
+          <Route
+            path="/create-client"
+            element={
+              <RequireAuth role="admin">
+                <CreateClient />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/view-clients"
+            element={
+              <RequireAuth role="admin">
+                <ViewClient />
+              </RequireAuth>
+            }
+          />
+          
+          <Route
+            path="/admin-profile"
+            element={
+              <RequireAuth role="admin">
+                <AdminProfile />
+              </RequireAuth>
+            }
+          />
+
         </Routes>
       </Router>
     </AuthProvider>
@@ -116,7 +140,14 @@ const App = () => {
 // Conditional Navbar Component
 const ConditionalNavbar = () => {
   const location = useLocation();
-  const excludeNavbarRoutes = ["/"]; // Add any other routes you want to exclude here
+  const excludeNavbarRoutes = ["/", "/admin-dashboard", "/create-user"]; // Exclude routes where the navbar is not needed
+  const adminRoutes = ["/admin-dashboard","/create-client","/view-clients","/admin-profile" ]; // You can expand this to include all admin-specific routes
+
+  // Check if the current route matches an admin route
+  if (adminRoutes.some((route) => location.pathname.startsWith(route))) {
+    return <AdminNavbar />; // Render AdminNavbar for admin routes
+  }
+
   return !excludeNavbarRoutes.includes(location.pathname) ? <Navbar /> : null;
 };
 
