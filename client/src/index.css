@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+  color :#302f2f;
+}
+body{
+  color: #302f2f;
+  background-color: white;
+  overflow-x: hidden; /* Completely hides horizontal overflow */
+  overflow-y: auto;
+}
+body::-webkit-scrollbar {
+  display: none; /* Hides scrollbar in Chrome, Edge, Safari */
+}
+
+#tasklist::-webkit-scrollbar{
+  display: none;
+}
+#adminTaskList::-webkit-scrollbar{
+  display: none;
+}
