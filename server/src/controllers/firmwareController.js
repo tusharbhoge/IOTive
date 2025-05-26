@@ -1,45 +1,24 @@
-import { createWokwiProject } from '../services/createWokwiProject.js';
-import { generateFirmwareCode } from '../services/generateFirmwareCode.js';
-import { sendFirmwareToWokwi } from '../services/sendToWokwi.js';
+import { generateFirmwareCode } from "../services/generateFirmwareCode.js";
+import { compileFirmware } from "../services/compileFirmware.js";
+import { flashFirmware } from "../services/flashFirmware.js";
 
 export const generateAndUploadFirmware = async (req, res) => {
   try {
-    // Extract client data from the request body
-    const { clientId, boardId, appliances, wifiSSID, wifiPassword } = req.body;
+    const { clientId, boardId, appliances, wifiSSID, wifiPassword, port } = req.body;
 
-    console.log('Received request to generate firmware with data:', {
-      clientId,
-      boardId,
-      appliances,
-      wifiSSID,
-      wifiPassword
-    });
+    // Step 1: Generate firmware code
+    const firmwarePath = generateFirmwareCode({ clientId, boardId, appliances, wifiSSID, wifiPassword });
 
-    // Step 1: Generate dynamic firmware code based on the client's data
-    const firmwareCode = generateFirmwareCode({
-      clientId,
-      boardId,
-      appliances,
-      wifiSSID,
-      wifiPassword
-    });
+    // Step 2: Compile firmware
+    const compiledFirmware = await compileFirmware(firmwarePath);
 
-    console.log('Generated firmware code:', firmwareCode);
+    // Step 3: Flash firmware onto ESP32
+    const flashResult = await flashFirmware(compiledFirmware, port);
 
-    // Step 2: Create a new Wokwi project
-    const projectId = await createWokwiProject();
-    console.log(`New Wokwi Project Created: ${projectId}`);
-
-    // Step 3: Send the generated firmware code to Wokwi for compilation/upload
-    const result = await sendFirmwareToWokwi(firmwareCode, projectId);
-    console.log('Firmware sent to Wokwi, result:', result);
-
-    // Step 4: Respond with the result (e.g., download link or success message)
-    res.json(result);
+    res.json({ message: "Firmware flashed successfully!", details: flashResult });
   } catch (error) {
-    console.error('Error in firmware generation/upload:', error);
-    res.status(500).json({ error: 'Firmware generation failed', details: error.message });
+    console.error(error);
+    res.status(500).json({ error: "Failed to process firmware", details: error.message });
   }
 };
-
 

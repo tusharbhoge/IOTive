@@ -13,7 +13,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const initializeFirebase = async () => {
   try {
     // Ensure FIREBASE_SERVICE_ACCOUNT_PATH is set in .env
-    const serviceAccountPath = "../../path-to-your-service-account.json";
+    const serviceAccountPath = "../../firestoreinfo/path-to-your-service-account.json";
 
     if (!serviceAccountPath) {
       throw new Error("❌ FIREBASE_SERVICE_ACCOUNT_PATH not found in .env file");

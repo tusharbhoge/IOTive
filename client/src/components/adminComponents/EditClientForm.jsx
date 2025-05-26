@@ -23,7 +23,10 @@ const EditClientForm = ({ user, onSave, onCancel }) => {
   const addBoard = () => {
     setFormData({
       ...formData,
-      boards: [...formData.boards, { boardId: `board-${Date.now()}`, appliances: [] }],
+      boards: [
+        ...formData.boards,
+        { boardId: `board-${Date.now()}`, room: "", appliances: [""] },
+      ],
     });
   };
 
@@ -40,7 +43,9 @@ const EditClientForm = ({ user, onSave, onCancel }) => {
 
   const removeAppliance = (boardIndex, applianceIndex) => {
     const updatedBoards = [...formData.boards];
-    updatedBoards[boardIndex].appliances = updatedBoards[boardIndex].appliances.filter((_, i) => i !== applianceIndex);
+    updatedBoards[boardIndex].appliances = updatedBoards[
+      boardIndex
+    ].appliances.filter((_, i) => i !== applianceIndex);
     setFormData({ ...formData, boards: updatedBoards });
   };
 
@@ -112,9 +117,14 @@ const EditClientForm = ({ user, onSave, onCancel }) => {
           <h3 className="text-xl font-semibold text-emerald-600 mb-3">Boards</h3>
 
           {formData.boards.map((board, boardIndex) => (
-            <div key={board.boardId} className="bg-white p-4 rounded-lg shadow-md mb-4">
+            <div
+              key={board.boardId}
+              className="bg-white p-4 rounded-lg shadow-md mb-4"
+            >
               <div className="flex justify-between items-center">
-                <h4 className="text-lg font-semibold text-gray-700">Board {boardIndex + 1}</h4>
+                <h4 className="text-lg font-semibold text-gray-700">
+                  Board {boardIndex + 1}
+                </h4>
                 <button
                   type="button"
                   onClick={() => removeBoard(boardIndex)}
@@ -124,24 +134,47 @@ const EditClientForm = ({ user, onSave, onCancel }) => {
                 </button>
               </div>
 
+              {/* Board ID Input */}
               <input
                 type="text"
                 value={board.boardId}
-                onChange={(e) => handleBoardChange(boardIndex, "boardId", e.target.value)}
+                onChange={(e) =>
+                  handleBoardChange(boardIndex, "boardId", e.target.value)
+                }
                 className="border p-2 rounded-lg w-full mt-2"
                 disabled
               />
 
+              {/* Room Input */}
+              <input
+                type="text"
+                value={board.room}
+                onChange={(e) =>
+                  handleBoardChange(boardIndex, "room", e.target.value)
+                }
+                placeholder="Room Name"
+                className="border p-2 rounded-lg w-full mt-2"
+                required
+              />
+
               {/* Appliances Section */}
               <div className="mt-4">
-                <h5 className="text-md font-semibold text-gray-600">Appliances</h5>
+                <h5 className="text-md font-semibold text-gray-600">
+                  Appliances
+                </h5>
 
                 {board.appliances.map((appliance, applianceIndex) => (
                   <div key={applianceIndex} className="flex items-center gap-2 mt-2">
                     <input
                       type="text"
                       value={appliance}
-                      onChange={(e) => handleApplianceChange(boardIndex, applianceIndex, e.target.value)}
+                      onChange={(e) =>
+                        handleApplianceChange(
+                          boardIndex,
+                          applianceIndex,
+                          e.target.value
+                        )
+                      }
                       className="border p-2 rounded-lg w-full"
                     />
                     <button

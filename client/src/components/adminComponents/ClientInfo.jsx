@@ -15,7 +15,10 @@ const ClientInfo = () => {
   const [error, setError] = useState(null);
   const [showConfirm, setShowConfirm] = useState(false);
   const [adminUid, setAdminUid] = useState(null);
-  const [firmwarePopup, setFirmwarePopup] = useState({ show: false, boardId: null });
+  const [firmwarePopup, setFirmwarePopup] = useState({
+    show: false,
+    boardId: null,
+  });
   const [isEditing, setIsEditing] = useState(false);
   const [wifiSSID, setWifiSSID] = useState("");
   const [wifiPassword, setWifiPassword] = useState("");
@@ -40,7 +43,9 @@ const ClientInfo = () => {
     const fetchClientData = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`/api/admin/${adminUid}/clients/${clientUid}`);
+        const response = await axios.get(
+          `/api/admin/${adminUid}/clients/${clientUid}`
+        );
         setUser(response.data);
       } catch (err) {
         setError(err.response?.data?.message || "Failed to fetch client data");
@@ -55,7 +60,10 @@ const ClientInfo = () => {
   const handleSave = async (updatedData) => {
     setLoading(true);
     try {
-      const response = await axios.put(`/api/admin/${adminUid}/clients/${clientUid}`, updatedData);
+      const response = await axios.put(
+        `/api/admin/${adminUid}/clients/${clientUid}`,
+        updatedData
+      );
       setUser(response.data.updatedClientData);
       setIsEditing(false);
     } catch (err) {
@@ -77,19 +85,22 @@ const ClientInfo = () => {
 
     setLoading(true);
     try {
-      const response = await axios.post(`/api/admin/${adminUid}/clients/${clientUid}/generate-firmware`, {
-        clientId: clientUid,
-        boardId: board.boardId,
-        appliances: board.appliances,
-        wifiSSID,
-        wifiPassword,
-        // firebaseURL: 'https://your-firebase-url.firebaseio.com' // Replace with your Firebase URL
-      });
+      const response = await axios.post(
+        `/api/admin/${adminUid}/clients/${clientUid}/generate-firmware`,
+        {
+          clientId: clientUid,
+          boardId: board.boardId,
+          appliances: board.appliances,
+          wifiSSID,
+          wifiPassword,
+          port: "COM3",
+        }
+      );
       console.log("Firmware generated:", response.data);
       setFirmwarePopup({ show: false, boardId: null });
       alert("Firmware generated successfully!");
     } catch (err) {
-      setError(err.response?.data?.message || "Failed to generate firmware 1");
+      setError(err.response?.data?.message || "Failed to generate firmware");
     } finally {
       setLoading(false);
     }
@@ -117,14 +128,20 @@ const ClientInfo = () => {
     }
   };
 
-  if (loading) return <p className="text-center text-gray-500">Loading...</p>;
+  if (loading)
+    return <p className="text-center text-gray-500">Loading .....</p>;
   if (error) return <p className="text-center text-red-500">{error}</p>;
-  if (!user) return <p className="text-center text-gray-500">User not found.</p>;
+  if (!user)
+    return <p className="text-center text-gray-500">User not found.</p>;
 
   return (
-    <div className="p-10  w-1/2 mx-auto bg-white shadow-lg rounded-2xl border border-gray-200">
+    <div className="p-10 w-1/2 mx-auto bg-white shadow-lg rounded-2xl border border-gray-200">
       {isEditing ? (
-        <EditClientForm user={user} onSave={handleSave} onCancel={() => setIsEditing(false)} />
+        <EditClientForm
+          user={user}
+          onSave={handleSave}
+          onCancel={() => setIsEditing(false)}
+        />
       ) : (
         <>
           <h2 className="text-2xl p-3 font-bold flex items-center gap-2">
@@ -132,18 +149,37 @@ const ClientInfo = () => {
           </h2>
 
           <div className="p-4 rounded-lg mb-4">
-            <p><strong>Name:</strong> {user.firstName} {user.lastName}</p>
-            <p><strong>Email:</strong> {user.email}</p>
-            <p><strong>Phone:</strong> {user.phone}</p>
-            <p><strong>Address:</strong> {user.address}</p>
-            <p><strong>Boards:</strong> {user.boards?.length || 0}</p>
-            <p><strong>Joined On:</strong> {new Date(user.createdAt._seconds * 1000).toLocaleDateString("en-US")}</p>
+            <p>
+              <strong>Name:</strong> {user.firstName} {user.lastName}
+            </p>
+            <p>
+              <strong>Email:</strong> {user.email}
+            </p>
+            <p>
+              <strong>Phone:</strong> {user.phone}
+            </p>
+            <p>
+              <strong>Address:</strong> {user.address}
+            </p>
+            <p>
+              <strong>Boards:</strong> {user.boards?.length || 0}
+            </p>
+            <p>
+              <strong>Joined On:</strong>{" "}
+              {new Date(user.createdAt._seconds * 1000).toLocaleDateString(
+                "en-US"
+              )}
+            </p>
           </div>
 
           <div className="mb-4">
             {user.boards?.length > 0 ? (
               user.boards.map((board) => (
-                <BoardInfo key={board.boardId} board={board} onGenerateFirmware={handleGenerateFirmware} />
+                <BoardInfo
+                  key={board.boardId}
+                  board={board}
+                  onGenerateFirmware={handleGenerateFirmware}
+                />
               ))
             ) : (
               <p className="text-gray-500">No boards available</p>
@@ -151,10 +187,16 @@ const ClientInfo = () => {
           </div>
 
           <div className="flex gap-4">
-            <button onClick={handleUpdateUser} className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition">
+            <button
+              onClick={handleUpdateUser}
+              className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition"
+            >
               Update User
             </button>
-            <button onClick={handleRemoveUser} className="bg-rose-600 text-white px-4 py-2 rounded-lg hover:bg-rose-800 transition">
+            <button
+              onClick={handleRemoveUser}
+              className="bg-rose-600 text-white px-4 py-2 rounded-lg hover:bg-rose-800 transition"
+            >
               Remove User
             </button>
           </div>
@@ -184,42 +226,75 @@ const ClientInfo = () => {
   );
 };
 
+// Updated BoardInfo Component with Room Logic
 const BoardInfo = ({ board, onGenerateFirmware }) => (
   <div className="border p-6 rounded-lg shadow-md mb-4">
     <h3 className="font-semibold text-lg pb-2">Board ID: {board.boardId}</h3>
+    <p className="text-gray-700 mb-2">
+      <strong>Room:</strong> {board.room || "No room specified"}
+    </p>
     <ul className="list-disc pl-5 p-2 text-gray-700">
       {board.appliances?.length ? (
-        board.appliances.map((appliance, index) => <li key={index}>{appliance}</li>)
+        board.appliances.map((appliance, index) => (
+          <li key={index}>{appliance}</li>
+        ))
       ) : (
         <li className="text-gray-500">No appliances found</li>
       )}
     </ul>
-    <button onClick={() => onGenerateFirmware(board.boardId)} className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-800 transition">
+    <button
+      onClick={() => onGenerateFirmware(board.boardId)}
+      className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-800 transition"
+    >
       Generate Firmware
     </button>
   </div>
 );
 
+// Modal and FirmwareModal components remain unchanged
 const Modal = ({ message, onConfirm, onCancel, confirmText = "Yes, Remove" }) => (
   <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
     <div className="bg-white p-6 rounded-lg shadow-lg">
       <p className="text-lg font-semibold">{message}</p>
       <div className="flex gap-4 mt-4">
-        <button onClick={onConfirm} className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-800 transition">
+        <button
+          onClick={onConfirm}
+          className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-800 transition"
+        >
           {confirmText}
         </button>
-        {onCancel && <button onClick={onCancel} className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition">Cancel</button>}
+        {onCancel && (
+          <button
+            onClick={onCancel}
+            className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition"
+          >
+            Cancel
+          </button>
+        )}
       </div>
     </div>
   </div>
 );
 
-const FirmwareModal = ({ boardId, wifiSSID, setWifiSSID, wifiPassword, setWifiPassword, onSubmit, onCancel }) => (
+const FirmwareModal = ({
+  boardId,
+  wifiSSID,
+  setWifiSSID,
+  wifiPassword,
+  setWifiPassword,
+  onSubmit,
+  onCancel,
+}) => (
   <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
     <div className="bg-white p-6 rounded-lg shadow-lg">
-      <h3 className="text-lg font-semibold mb-4">Generate Firmware for Board ID: {boardId}</h3>
+      <h3 className="text-lg font-semibold mb-4">
+        Generate Firmware for Board ID: {boardId}
+      </h3>
       <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="wifiSSID">
+        <label
+          className="block text-gray-700 text-sm font-bold mb-2"
+          htmlFor="wifiSSID"
+        >
           WiFi SSID
         </label>
         <input
@@ -231,7 +306,10 @@ const FirmwareModal = ({ boardId, wifiSSID, setWifiSSID, wifiPassword, setWifiPa
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="wifiPassword">
+        <label
+          className="block text-gray-700 text-sm font-bold mb-2"
+          htmlFor="wifiPassword"
+        >
           WiFi Password
         </label>
         <input
@@ -243,10 +321,16 @@ const FirmwareModal = ({ boardId, wifiSSID, setWifiSSID, wifiPassword, setWifiPa
         />
       </div>
       <div className="flex gap-4">
-        <button onClick={onSubmit} className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-800 transition">
+        <button
+          onClick={onSubmit}
+          className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-800 transition"
+        >
           Generate
         </button>
-        <button onClick={onCancel} className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition">
+        <button
+          onClick={onCancel}
+          className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition"
+        >
           Cancel
         </button>
       </div>

@@ -19,7 +19,7 @@ const CreateClient = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [boards, setBoards] = useState([{ boardId: "", appliances: [""] }]);
+  const [boards, setBoards] = useState([{ boardId: "", room: "", appliances: [""] }]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -73,7 +73,7 @@ const CreateClient = () => {
         address: "",
         board_count: 1,
       });
-      setBoards([{ boardId: "", appliances: [""] }]);
+      setBoards([{ boardId: "", room: "", appliances: [""] }]);
     } catch (error) {
       console.error("Error creating client:", error.response?.data || error);
       setError(
@@ -86,9 +86,9 @@ const CreateClient = () => {
     }
   };
 
-  const handleBoardChange = (index, value) => {
+  const handleBoardChange = (index, field, value) => {
     const newBoards = [...boards];
-    newBoards[index].boardId = value;
+    newBoards[index][field] = value;
     setBoards(newBoards);
   };
 
@@ -113,7 +113,7 @@ const CreateClient = () => {
   };
 
   const addBoard = () => {
-    setBoards([...boards, { boardId: "", appliances: [""] }]);
+    setBoards([...boards, { boardId: "", room: "", appliances: [""] }]);
   };
 
   const removeBoard = (boardIndex) => {
@@ -133,65 +133,65 @@ const CreateClient = () => {
           onSubmit={handleSubmit}
           className="bg-white shadow-md rounded p-6 space-y-4"
         >
-          
-          <h1 className="text-xl font-bold ">Client Information</h1>
-          <div className="space-y-4 bg-gray-100 p-4 rounded ">
-          <input
-            type="text"
-            name="firstName"
-            value={client.firstName}
-            onChange={handleInputChange}
-            placeholder="First Name"
-            required
-            className="w-full p-2 border rounded"
-          />
-          <input
-            type="text"
-            name="lastName"
-            value={client.lastName}
-            onChange={handleInputChange}
-            placeholder="Last Name"
-            required
-            className="w-full p-2 border rounded"
-          />
-          <input
-            type="email"
-            name="email"
-            value={client.email}
-            onChange={handleInputChange}
-            placeholder="Email"
-            required
-            className="w-full p-2 border rounded"
-          />
-          <input
-            type="tel"
-            name="phone"
-            value={client.phone}
-            onChange={handleInputChange}
-            placeholder="Phone Number"
-            required
-            className="w-full p-2 border rounded"
-          />
-          <input
-            type="text"
-            name="address"
-            value={client.address}
-            onChange={handleInputChange}
-            placeholder="Address"
-            required
-            className="w-full p-2 border rounded"
-          />
-          <input
-            type="number"
-            name="board_count"
-            value={client.board_count}
-            onChange={handleInputChange}
-            placeholder="Board Count"
-            required
-            className="w-full p-2 border rounded "
-          />
+          <h1 className="text-xl font-bold">Client Information</h1>
+          <div className="space-y-4 bg-gray-100 p-4 rounded">
+            <input
+              type="text"
+              name="firstName"
+              value={client.firstName}
+              onChange={handleInputChange}
+              placeholder="First Name"
+              required
+              className="w-full p-2 border rounded"
+            />
+            <input
+              type="text"
+              name="lastName"
+              value={client.lastName}
+              onChange={handleInputChange}
+              placeholder="Last Name"
+              required
+              className="w-full p-2 border rounded"
+            />
+            <input
+              type="email"
+              name="email"
+              value={client.email}
+              onChange={handleInputChange}
+              placeholder="Email"
+              required
+              className="w-full p-2 border rounded"
+            />
+            <input
+              type="tel"
+              name="phone"
+              value={client.phone}
+              onChange={handleInputChange}
+              placeholder="Phone Number"
+              required
+              className="w-full p-2 border rounded"
+            />
+            <input
+              type="text"
+              name="address"
+              value={client.address}
+              onChange={handleInputChange}
+              placeholder="Address"
+              required
+              className="w-full p-2 border rounded"
+            />
+            <input
+              type="number"
+              name="board_count"
+              value={client.board_count}
+              onChange={handleInputChange}
+              placeholder="Board Count"
+              required
+              className="w-full p-2 border rounded"
+            />
           </div>
-          <h1 className="text-xl font-bold  ">Board Information</h1>
+
+          <h1 className="text-xl font-bold">Board Information</h1>
 
           {/* Add Board Button */}
           <button
@@ -200,21 +200,24 @@ const CreateClient = () => {
           >
             Add Board
           </button>
+
           {boards.map((board, boardIndex) => (
             <div key={boardIndex} className="bg-gray-100 p-4 rounded">
-              <div className="flex items-center space-x-2">
+              <div className="space-y-4">
+                <div className="flex items-center space-x-2">
+                {/* Board ID Input */}
                 <input
                   type="text"
                   value={board.boardId}
                   onChange={(e) =>
-                    handleBoardChange(boardIndex, e.target.value)
+                    handleBoardChange(boardIndex, "boardId", e.target.value)
                   }
                   placeholder="Board ID"
                   className="w-full p-2 border rounded"
                   required
                 />
-                {/* Add Appliance Button */}
-                <button
+                 {/* Add Appliance Button */}
+                 <button
                   type="button"
                   onClick={() => addAppliance(boardIndex)}
                   className="px-1 py-1"
@@ -227,6 +230,7 @@ const CreateClient = () => {
                     }}
                   />
                 </button>
+
                 {/* Delete Board Button */}
                 <button
                   type="button"
@@ -242,46 +246,65 @@ const CreateClient = () => {
                     }}
                   />
                 </button>
-              </div>
-
-              {board.appliances.map((appliance, applianceIndex) => (
-                <div
-                  key={applianceIndex}
-                  className="flex items-center space-x-2 mt-2"
-                >
-                  <input
-                    type="text"
-                    value={appliance}
-                    onChange={(e) =>
-                      handleApplianceChange(
-                        boardIndex,
-                        applianceIndex,
-                        e.target.value
-                      )
-                    }
-                    placeholder="Device Name"
-                    className="w-full p-2 border rounded"
-                    required
-                  />
-                  {/* Remove Appliance Button */}
-                  <button
-                    type="button"
-                    onClick={() => removeAppliance(boardIndex, applianceIndex)}
-                    className="px-3 py-1"
-                    disabled={board.appliances.length === 1}
-                  >
-                    <DisabledByDefaultIcon
-                      style={{
-                        fontSize: "30px",
-                        cursor: "pointer",
-                        fill: "#D91656",
-                      }}
-                    />
-                  </button>
                 </div>
-              ))}
+
+                {/* Room Input */}
+                <input
+                  type="text"
+                  value={board.room}
+                  onChange={(e) =>
+                    handleBoardChange(boardIndex, "room", e.target.value)
+                  }
+                  placeholder="Room Name"
+                  className="w-full p-2 border rounded"
+                  required
+                />
+
+               
+
+                {/* Appliances Inputs */}
+                {board.appliances.map((appliance, applianceIndex) => (
+                  <div
+                    key={applianceIndex}
+                    className="flex items-center space-x-2 mt-2"
+                  >
+                    <input
+                      type="text"
+                      value={appliance}
+                      onChange={(e) =>
+                        handleApplianceChange(
+                          boardIndex,
+                          applianceIndex,
+                          e.target.value
+                        )
+                      }
+                      placeholder="Device Name"
+                      className="w-full p-2 border rounded"
+                      required
+                    />
+
+                    {/* Remove Appliance Button */}
+                    <button
+                      type="button"
+                      onClick={() => removeAppliance(boardIndex, applianceIndex)}
+                      className="px-3 py-1"
+                      disabled={board.appliances.length === 1}
+                    >
+                      <DisabledByDefaultIcon
+                        style={{
+                          fontSize: "30px",
+                          cursor: "pointer",
+                          fill: "#D91656",
+                        }}
+                      />
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
+
+          {/* Submit Button */}
           <button
             type="submit"
             className="bg-emerald-600 text-white px-6 py-2 rounded shadow w-full mt-6"
@@ -291,7 +314,6 @@ const CreateClient = () => {
           </button>
         </form>
       </div>
-     
     </>
   );
 };

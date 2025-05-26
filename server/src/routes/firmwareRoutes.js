@@ -1,6 +1,5 @@
 import express from 'express';
-import { generateFirmwareCode } from '../services/generateFirmwareCode.js';
-import { sendFirmwareToWokwi } from '../services/sendToWokwi.js';
+
 import  { generateAndUploadFirmware } from '../controllers/firmwareController.js';
 
 const router = express.Router();
