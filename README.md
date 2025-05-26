@@ -187,19 +187,19 @@ npm run dev
 ## 🖼️ Snapshots
 
 ### 🔹 Login page UI
-![Login page](./snapshots/Login page.png)
+![Login page](./snapshots/Login-page.png)
 
 ### 🔹 Dashboard UI
-![Home page](./snapshots/Home page.png)
+![Home page](./snapshots/Home-page.png)
 
 ### 🔹 Client creation UI
-![Client creation](./snapshots/Create client page.png)
+![Client creation](./snapshots/Create-client-page.png)
 
 ### 🔹 Clients page UI
-![Clients page](./snapshots/Clients page.png)
+![Clients page](./snapshots/Clients-page.png)
 
 ### 🔹 Client Info page UI
-![Client Info page](./snapshots/Client Info page.png)
+![Client Info page](./snapshots/Client-Info-page.png)
 
 ### 🔹 Update client page UI
-![Update client page](./snapshots/Update client page.png)
+![Update client page](./snapshots/Update-client-page.png)
